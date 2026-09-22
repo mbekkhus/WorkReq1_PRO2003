@@ -87,3 +87,27 @@ LEFT JOIN workout_program AS wp
   ON au.id = wp.user_id
 GROUP BY au.id, au.name
 ORDER BY number_of_programs DESC, au.name;
+
+-- Query 7:
+-- Shows how many exercises are available for each muscle group.
+
+SELECT
+  muscle_group,
+  COUNT(*) AS number_of_exercises
+FROM exercise
+GROUP BY muscle_group
+ORDER BY number_of_exercises DESC, muscle_group;
+
+-- Query 8:
+-- Shows how many workout programs use each exercise.
+-- Exercises that are not assigned to a program are also included.
+
+SELECT
+  e.name AS exercise_name,
+  e.muscle_group,
+  COUNT(DISTINCT pe.program_id) AS number_of_programs
+FROM exercise AS e
+LEFT JOIN program_exercise AS pe
+  ON e.id = pe.exercise_id
+GROUP BY e.id, e.name, e.muscle_group
+ORDER BY number_of_programs DESC, e.name;
