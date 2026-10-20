@@ -33,3 +33,6 @@ CREATE TABLE program_exercise (
   FOREIGN KEY (exercise_id) REFERENCES exercise(id),
   UNIQUE (program_id, exercise_order)
 );
+
+-- Index on the foreign key used when joining and looking up exercises. 
+CREATE INDEX IF NOT EXISTS idx_program_exercise_exercise_id ON program_exercise (exercise_id);
